@@ -9,10 +9,8 @@ defn main(file="data/cities500.txt"):
 
 defn load-cities(file):
   rows =:
-    map _ slurp(file):lines:
-      fn(line):
-        # Lines end with "\r\n" and that makes last element always being an "\r"
-        line.split("\t"):drop-last
+    map _ geonames/lines(file):
+      fn(line): line.split("\t")
 
   map _ rows:
     fn(row):

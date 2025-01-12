@@ -9,14 +9,12 @@ defn main(file="data/countryInfo.txt"):
 
 defn load-country-info(file):
   lines =:
-    grep _ slurp(file):lines:
+    grep _ geonames/lines(file):
       fn(line): line.starts?("#"):not
 
   rows =:
     map _ lines:
-      fn(line):
-        # Lines end with "\r\n" and that makes last element always being an "\r"
-        line.split("\t"):drop-last
+      fn(line): line.split("\t")
 
   map _ rows:
     fn(row):

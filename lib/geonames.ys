@@ -45,3 +45,8 @@ country-info-columns =: !
   - geonameid
   - neighbours
   - EquivalentFipsCode
+
+defn lines(file):
+  map _ std/lines(slurp(file)):
+    # Lines end with "\r\n" and that makes last element always being an "\r"
+    fn(line): line:chomp
