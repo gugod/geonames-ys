@@ -1,0 +1,20 @@
+#!/usr/bin/env ys-0
+
+use geonames:
+
+defn main(file="data/cities500.txt"):
+  cities =: load-cities(file)
+  say:
+    yaml/dump: cities
+
+defn load-cities(file):
+  rows =:
+    map _ slurp(file):lines:
+      fn(line):
+        # Lines end with "\r\n" and that makes last element always being an "\r"
+        line.split("\t"):drop-last
+
+  map _ rows:
+    fn(row):
+      apply omap:
+        interleave geonames/columns: row
