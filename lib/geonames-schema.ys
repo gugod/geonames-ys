@@ -1,0 +1,18 @@
+!yamlscript/v0
+
+# ns geonames.schema:
+ns geonames-schema:
+
+# defn varchar(max-length):
+#   fn(x): (and x:string? (s:len <= max-length))
+
+defn check(verified? message):
+  fn(x):
+    if verified?(x):
+      then: x
+      else: die(message(x))
+
+varchar200 =:
+  check:
+    fn(x): and(x:string? (x:len <= 200))
+    fn(x): "Invalid varchar200: $x"
