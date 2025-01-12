@@ -5,6 +5,8 @@
 use geonames-schema:
 
 --- !yamlscript/v0:
+- !:geonames-schema/longitude
+  42
 - !:geonames-schema/varchar200
   "foobar"
 - !:geonames-schema/varchar200

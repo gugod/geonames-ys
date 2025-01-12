@@ -10,9 +10,27 @@ defn check(verified? message):
       then: x
       else: die(message(x))
 
+## check-builders
 defn varchar(max-length):
   check:
     fn(x): and(x:string? (x:len <= max-length))
     fn(x): "Invalid varchar($max-length): $x"
 
+defn num(min-inclusive max-exclusive):
+  check:
+    fn(x): and(x:number? (<= min-inclusive x) (< x max-exclusive))
+    fn(x): "Not a number in range ($min-inclusive .. $max-exclusive): $x"
+
 varchar200 =: varchar(200)
+
+# TODO: num(-90^..^90, "Invalid latitude $_")
+latitude =:
+  check:
+    fn(x): and(x:number? (< -90 x 90))
+    fn(x): "Invalid latitude: $x"
+
+# TODO: num(-180^..^180, "Invalid longitude $_")
+longitude =:
+  check:
+    fn(x): and(x:number? (< -180 x 180))
+    fn(x): "Invalid longitude: $x"
