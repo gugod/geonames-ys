@@ -33,8 +33,15 @@ data/readme.txt:
 data/countryInfo.txt:
 	${CURL} -o $@ https://download.geonames.org/export/dump/countryInfo.txt
 
+data/cities-sample.txt: data/cities500.txt
+	${YS} bin/sample.ys $< > $@
+	wc -l data/cities-sample.txt
+
 data/cities500.txt: data/cities500.zip
-	(cd data; unzip -Du cities500.zip)
+	(cd data; unzip -Du cities500.zip && touch cities500.txt)
 
 data/cities500.zip:
 	${CURL} -o $@ https://download.geonames.org/export/dump/cities500.zip
+
+data/alternateNamesV2.zip:
+	${CURL} -o $@ https://download.geonames.org/export/dump/alternateNamesV2

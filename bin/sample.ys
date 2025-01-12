@@ -1,0 +1,11 @@
+#!/usr/bin/env ys-0
+
+use geonames:
+
+defn main(file prob=0.01):
+  lines =:
+    grep _ geonames/lines(file):
+      fn(line): line.starts?("#"):not
+
+  each line random-sample(prob lines):
+    println: line
