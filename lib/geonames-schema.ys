@@ -3,16 +3,15 @@
 # ns geonames.schema:
 ns geonames-schema:
 
-# defn varchar(max-length):
-#   fn(x): (and x:string? (s:len <= max-length))
-
 defn check(verified? message):
   fn(x):
     if verified?(x):
       then: x
       else: die(message(x))
 
-varchar200 =:
+defn varchar(max-length):
   check:
-    fn(x): and(x:string? (x:len <= 200))
-    fn(x): "Invalid varchar200: $x"
+    fn(x): and(x:string? (x:len <= max-length))
+    fn(x): "Invalid varchar($max-length): $x"
+
+varchar200 =: varchar(200)
