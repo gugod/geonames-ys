@@ -1,0 +1,44 @@
+#!/usr/bin/env ys-0
+# yaml-mode
+
+defn main(file="data/countryInfo.txt"):
+  country-info =: load-country-info(file)
+  say:
+    yaml/dump: country-info
+
+defn load-country-info(file):
+  # Copied from countryInfo.txt then manually re-arranged.
+  columns =: !
+    - ISO
+    - ISO3
+    - ISO-Numeric
+    - fips
+    - Country
+    - Capital
+    - Area(in sq km)
+    - Population
+    - Continent
+    - tld
+    - CurrencyCode
+    - CurrencyName
+    - Phone
+    - Postal Code Format
+    - Postal Code Regex
+    - Languages
+    - geonameid
+    - neighbours
+    - EquivalentFipsCode
+
+  lines =:
+    grep _ slurp(file):lines:
+      fn(line): line.starts?("#"):not
+
+  rows =:
+    map _ lines:
+      fn(line):
+        line.split("\t"):drop-last # The last element is always an "\r"
+
+  map _ rows:
+    fn(row):
+      apply omap:
+        interleave columns: row
