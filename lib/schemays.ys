@@ -92,9 +92,10 @@ defn map(spec):
             if key =~ re-opt:
               -[key.replace(re-opt) true]
                [key false]
+          key-missing? =: new.find(key):nil?
           val =: new.$key
           type =: type:string?.if(type:get-dsl-type type)
-          if val:nil?:
+          if key-missing?:
             if-not opt:
               die: |
                 Missing key '$key' in:
