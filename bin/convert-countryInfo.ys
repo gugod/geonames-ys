@@ -32,7 +32,7 @@ defn to-nil-if-zero(s):
     else: s
 
 defn make-country-info(x):
-  m =: apply(hash-map x):WWW
+  m =: apply(hash-map x)
   =>: !:geonames/country-info:
     geonameid   : ! m.geonameid:N
     ISO         : ! m.ISO
@@ -40,3 +40,5 @@ defn make-country-info(x):
     ISO-Numeric : ! m.get("ISO-Numeric"):to-nil-if-zero
     fips        : ! m.get("fips"):to-nil-if-empty
     Area        : ! m.get("Area(in sq km)"):N
+    Continent   : ! m.get("Continent")
+    Country     : ! m.get("Country")
