@@ -34,22 +34,22 @@ defn to-nil-if-zero(s):
 defn make-country-info(x):
   m =: apply(omap x)
   =>: !:geonames/country-info:
-    ISO         : ! m.ISO
-    ISO3        : ! m.ISO3
-    ISO-Numeric : ! m.get("ISO-Numeric"):to-nil-if-zero
-    fips        : ! m.get("fips"):to-nil-if-empty
-    Country     : ! m.get("Country")
-    Capital     : ! m.get("Capital")
-    Area        : ! m.get("Area(in sq km)"):N
-    Population  : ! m.get("Population"):N
-    Continent   : ! m.get("Continent")
-    tld         : ! m.get("tld"):to-nil-if-empty
-    CurrencyCode : ! m.get("CurrencyCode"):to-nil-if-empty
-    CurrencyName : ! m.get("CurrencyName"):to-nil-if-empty
-    # Phone
-    # Postal Code Format
-    # Postal Code Regex
+    ISO              : ! m.ISO
+    ISO3             : ! m.ISO3
+    ISO-Numeric      : ! m.get("ISO-Numeric"):to-nil-if-zero
+    fips             : ! m.get("fips"):to-nil-if-empty
+    Country          : ! m.get("Country")
+    Capital          : ! m.get("Capital")
+    Area             : ! m.get("Area(in sq km)"):N
+    Population       : ! m.get("Population"):N
+    Continent        : ! m.get("Continent")
+    tld              : ! m.get("tld"):to-nil-if-empty
+    CurrencyCode     : ! m.get("CurrencyCode"):to-nil-if-empty
+    CurrencyName     : ! m.get("CurrencyName"):to-nil-if-empty
+    Phone            : ! m.get("Phone"):to-nil-if-empty
+    PostalCodeFormat : ! m.get("Postal Code Format"):to-nil-if-empty
+    PostalCodeRegex  : ! m.get("Postal Code Regex"):to-nil-if-empty
     # Languages
-    geonameid   : ! m.geonameid:N
+    geonameid        : ! m.geonameid:N
     # neighbours
     # EquivalentFipsCode

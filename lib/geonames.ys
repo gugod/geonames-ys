@@ -87,22 +87,21 @@ tld =:
   T/get-str-rgx: "/\\.[a-z][a-z]/"
 
 country-info =: !:T/map:
-  "ISO"         : ! iso2
-  "ISO3"        : ! iso3
-  "ISO-Numeric" : ! T/maybe(iso-numeric)
-  "fips"        : ! T/maybe(fips-code)
-  "Country"     : ! T/string-length(1 200)
-  "geonameid"   : ! T/integer
-  "Area"        : ! T/positive-num-or-zero
-  "Continent"   : ! continents
-  "Capital"     : ! T/string-length(0 200)
-  "CurrencyCode" : ! T/maybe(currency-codes)
-  "Population"  : ! T/positive-num-or-zero
-  "CurrencyName" : ! T/maybe(T/string-length(1 20))
-  "tld"         : ! T/maybe(tld)
-
+  "ISO"              : ! iso2
+  "ISO3"             : ! iso3
+  "ISO-Numeric"      : ! T/maybe(iso-numeric)
+  "fips"             : ! T/maybe(fips-code)
+  "Country"          : ! T/string-length(1         200)
+  "geonameid"        : ! T/integer
+  "Area"             : ! T/positive-num-or-zero
+  "Continent"        : ! continents
+  "Capital"          : ! T/string-length(0         200)
+  "CurrencyCode"     : ! T/maybe(currency-codes)
+  "Population"       : ! T/positive-num-or-zero
+  "CurrencyName"     : ! T/maybe(T/string-length(1 20))
+  "tld"              : ! T/maybe(tld)
+  "Phone"            : ! T/maybe(T/string-length(1 20))
+  "PostalCodeFormat" : ! T/maybe(T/string-length(1 60))
+  "PostalCodeRegex"  : ! T/maybe(T/string-length(1 200))
 # "Languages" "ca",
-# "Phone" "376",
-# "Postal Code Format" "AD###",
-# "Postal Code Regex" "^(?:AD)*(\\d{3})$",
 # "neighbours" "ES,FR",
