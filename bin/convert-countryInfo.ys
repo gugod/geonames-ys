@@ -21,11 +21,22 @@ defn load-country-info(file):
       make-country-info:
         interleave geonames/country-info-columns: row
 
+defn to-nil-if-empty(s):
+  if s == "":
+    then: nil
+    else: s
+
+defn to-nil-if-zero(s):
+  if s == "0":
+    then: nil
+    else: s
+
 defn make-country-info(x):
-  m =: apply(hash-map x)
-  geonames/country-info:
-    hash-map:
-      :geonameid m.geonameid:N
-      :ISO       m.ISO
-      :ISO3      m.ISO3
-      :Area      m.get("Area(in sq km)"):N
+  m =: apply(hash-map x):WWW
+  =>: !:geonames/country-info:
+    geonameid   : ! m.geonameid:N
+    ISO         : ! m.ISO
+    ISO3        : ! m.ISO3
+    ISO-Numeric : ! m.get("ISO-Numeric"):to-nil-if-zero
+    fips        : ! m.get("fips"):to-nil-if-empty
+    Area        : ! m.get("Area(in sq km)"):N

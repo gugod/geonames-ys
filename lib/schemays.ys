@@ -131,7 +131,17 @@ defn integer(val):
     die: "Not an integer: $val"
   =>: val
 
+defn string(val):
+  when-not val:string?:
+    die: "Not a string: $val"
+  =>: val
+
 defn positive-num(val):
   when-not val:number? && (val > 0):
     die: "Not a positive number: $val"
+  =>: val
+
+defn positive-num-or-zero(val):
+  when-not val:number? && (val >= 0):
+    die: "Not a positive number or zero: $val"
   =>: val
