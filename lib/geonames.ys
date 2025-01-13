@@ -2,6 +2,9 @@
 
 ns: geonames
 
+use: schemays
+require schemays: => T
+
 # Copied from readme.txt then manually re-arranged
 columns =: !
   - geonameid
@@ -50,3 +53,15 @@ defn lines(file):
   map _ std/lines(slurp(file)):
     # Lines end with "\r\n" and that makes last element always being an "\r"
     fn(line): line:chomp
+
+iso2 =:
+  T/get-str-rgx: "/[A-Z][A-Z]/"
+
+iso3 =:
+  T/get-str-rgx: "/[A-Z][A-Z][A-Z]/"
+
+country-info =: !:T/map:
+  geonameid: ! T/integer
+  ISO: ! iso2
+  ISO3: ! iso3
+  Area: ! T/positive-num

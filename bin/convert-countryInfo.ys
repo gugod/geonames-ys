@@ -1,6 +1,6 @@
 #!/usr/bin/env ys-0
 
-use geonames:
+use: geonames
 
 defn main(file="data/countryInfo.txt"):
   country-info =: load-country-info(file)
@@ -18,5 +18,14 @@ defn load-country-info(file):
 
   map _ rows:
     fn(row):
-      apply omap:
+      make-country-info:
         interleave geonames/country-info-columns: row
+
+defn make-country-info(x):
+  m =: apply(hash-map x)
+  geonames/country-info:
+    hash-map:
+      :geonameid m.geonameid:N
+      :ISO       m.ISO
+      :ISO3      m.ISO3
+      :Area      m.get("Area(in sq km)"):N
