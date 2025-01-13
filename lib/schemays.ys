@@ -136,6 +136,17 @@ defn string(val):
     die: "Not a string: $val"
   =>: val
 
+defn string-length(min-length max-length=nil):
+  fn(val):
+    val =: val:string
+    ok =:
+      if max-length == nil:
+        then: (<= min-length val:len)
+        else: (<= min-length val:len max-length)
+    when-not ok:
+      die: "Not a string of length $min-length .. $max-length: $val"
+    =>: val
+
 defn positive-num(val):
   when-not val:number? && (val > 0):
     die: "Not a positive number: $val"
