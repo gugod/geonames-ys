@@ -83,6 +83,9 @@ fips-code =:
 currency-codes =:
   T/get-str-rgx: "/[A-Z][A-Z][A-Z]/"
 
+tld =:
+  T/get-str-rgx: "/\\.[a-z][a-z]/"
+
 country-info =: !:T/map:
   "ISO"         : ! iso2
   "ISO3"        : ! iso3
@@ -96,11 +99,10 @@ country-info =: !:T/map:
   "CurrencyCode" : ! T/maybe(currency-codes)
   "Population"  : ! T/positive-num-or-zero
   "CurrencyName" : ! T/maybe(T/string-length(1 20))
+  "tld"         : ! T/maybe(tld)
 
 # "Languages" "ca",
 # "Phone" "376",
-# "Population" "77006",
 # "Postal Code Format" "AD###",
 # "Postal Code Regex" "^(?:AD)*(\\d{3})$",
 # "neighbours" "ES,FR",
-# "tld" ".ad"
