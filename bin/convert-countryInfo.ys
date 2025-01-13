@@ -32,13 +32,25 @@ defn to-nil-if-zero(s):
     else: s
 
 defn make-country-info(x):
-  m =: apply(hash-map x)
+  m =: apply(omap x)
   =>: !:geonames/country-info:
-    geonameid   : ! m.geonameid:N
     ISO         : ! m.ISO
     ISO3        : ! m.ISO3
     ISO-Numeric : ! m.get("ISO-Numeric"):to-nil-if-zero
     fips        : ! m.get("fips"):to-nil-if-empty
-    Area        : ! m.get("Area(in sq km)"):N
-    Continent   : ! m.get("Continent")
     Country     : ! m.get("Country")
+    Capital     : ! m.get("Capital")
+    Area        : ! m.get("Area(in sq km)"):N
+    Population  : ! m.get("Population"):N
+    Continent   : ! m.get("Continent")
+    # tld
+    CurrencyCode : ! m.get("CurrencyCode"):to-nil-if-empty
+    CurrencyName : ! m.get("CurrencyName"):to-nil-if-empty
+    # Phone
+    # Postal Code Format
+    # Postal Code Regex
+    # Languages
+    geonameid   : ! m.geonameid:N
+    # geonameid
+    # neighbours
+    # EquivalentFipsCode

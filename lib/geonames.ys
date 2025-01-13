@@ -80,35 +80,23 @@ iso-numeric =: # String. Leading zeros.
 fips-code =:
   T/get-str-rgx: "/[A-Z][A-Z]/"
 
-# Some fields in countryInfo.txt contain empty string or "0" as a way to say that the field is N/A for the given "country".
-# Since they are not available, it makes sense to turn those invalid values to nils.
-
-defn fips-code-or-nil(val):
-  if val:nil?:
-    then: val
-    else:
-      fips-code: val
-
-defn iso-numeric-or-nil(val):
-  if val:nil?:
-    then: val
-    else:
-      iso-numeric: val
+currency-codes =:
+  T/get-str-rgx: "/[A-Z][A-Z][A-Z]/"
 
 country-info =: !:T/map:
   "ISO"         : ! iso2
   "ISO3"        : ! iso3
-  "ISO-Numeric" : ! iso-numeric-or-nil
-  "fips"        : ! fips-code-or-nil
+  "ISO-Numeric" : ! T/maybe(iso-numeric)
+  "fips"        : ! T/maybe(fips-code)
   "Country"     : ! T/string-length(1 200)
   "geonameid"   : ! T/integer
   "Area"        : ! T/positive-num-or-zero
   "Continent"   : ! continents
+  "Capital"     : ! T/string-length(0 200)
+  "CurrencyCode" : ! T/maybe(currency-codes)
+  "Population"  : ! T/positive-num-or-zero
+  "CurrencyName" : ! T/maybe(T/string-length(1 20))
 
-# "Capital" "Andorra la Vella",
-# "Country" "Andorra",
-# "CurrencyCode" "EUR",
-# "CurrencyName" "Euro",
 # "Languages" "ca",
 # "Phone" "376",
 # "Population" "77006",
