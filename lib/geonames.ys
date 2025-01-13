@@ -54,6 +54,20 @@ defn lines(file):
     # Lines end with "\r\n" and that makes last element always being an "\r"
     fn(line): line:chomp
 
+# Types
+# -----
+
+# Continenet codes in copied from readme.txt
+continents =: !:T/enum:
+  - AF
+  - AS
+  - EU
+  - NA
+  - OC
+  - SA
+  - AN
+
+# iso2, iso3, fips are actually lengthy enum. In here we are lazy just use some regex to make a wider set.
 iso2 =:
   T/get-str-rgx: "/[A-Z][A-Z]/"
 
