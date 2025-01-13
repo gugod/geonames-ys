@@ -114,7 +114,10 @@ defn map(spec):
       else: map
 
 defn list(check):
-  check =: check.replace(/^\+/):value
+  check =:
+    if check:fn?:
+      then: check
+      else: check.replace(/^\+/):value
   fn(vals):
     if vals:coll?:
       each val vals:

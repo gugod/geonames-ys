@@ -86,16 +86,19 @@ currency-codes =:
 tld =:
   T/get-str-rgx: "/\\.[a-z][a-z]/"
 
+language-code =:
+  T/string-length: 1 200
+
 country-info =: !:T/map:
   "ISO"              : ! iso2
   "ISO3"             : ! iso3
   "ISO-Numeric"      : ! T/maybe(iso-numeric)
   "fips"             : ! T/maybe(fips-code)
-  "Country"          : ! T/string-length(1         200)
+  "Country"          : ! T/string-length(1 200)
   "geonameid"        : ! T/integer
   "Area"             : ! T/positive-num-or-zero
   "Continent"        : ! continents
-  "Capital"          : ! T/string-length(0         200)
+  "Capital"          : ! T/string-length(0 200)
   "CurrencyCode"     : ! T/maybe(currency-codes)
   "Population"       : ! T/positive-num-or-zero
   "CurrencyName"     : ! T/maybe(T/string-length(1 20))
@@ -103,5 +106,5 @@ country-info =: !:T/map:
   "Phone"            : ! T/maybe(T/string-length(1 20))
   "PostalCodeFormat" : ! T/maybe(T/string-length(1 60))
   "PostalCodeRegex"  : ! T/maybe(T/string-length(1 200))
-# "Languages" "ca",
+  "Languages"        : ! T/maybe(T/list(language-code))
 # "neighbours" "ES,FR",

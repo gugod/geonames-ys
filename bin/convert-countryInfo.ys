@@ -22,7 +22,7 @@ defn load-country-info(file):
         interleave geonames/country-info-columns: row
 
 defn to-nil-if-empty(s):
-  if s == "":
+  if s:empty?:
     then: nil
     else: s
 
@@ -30,6 +30,11 @@ defn to-nil-if-zero(s):
   if s == "0":
     then: nil
     else: s
+
+defn csv-list-or-nil(s):
+  if s:empty?:
+    then: nil
+    else: s.split(",")
 
 defn make-country-info(x):
   m =: apply(omap x)
@@ -49,7 +54,7 @@ defn make-country-info(x):
     Phone            : ! m.get("Phone"):to-nil-if-empty
     PostalCodeFormat : ! m.get("Postal Code Format"):to-nil-if-empty
     PostalCodeRegex  : ! m.get("Postal Code Regex"):to-nil-if-empty
-    # Languages
+    Languages        : ! m.get("Languages"):csv-list-or-nil
     geonameid        : ! m.geonameid:N
     # neighbours
     # EquivalentFipsCode
