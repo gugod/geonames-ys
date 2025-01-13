@@ -1,0 +1,126 @@
+!yamlscript/v0
+
+ns: schemays
+
+re-int-rng  =: /^(-?\d+)?\.\.(-?\d+)?$/
+re-flt-rng  =: /^(-?\d+\.\d+)?\.\.(-?\d+\.\d+)?$/
+re-type-ref =: /^\+(\w+(?:-\w+)*)$/
+re-regex    =: /^\/(.*)\/$/
+
+defn get-int-rng(rng):
+  m =: rng =~ re-int-rng
+  m x y =: m
+  when-not x || y:
+    die: "Range must have start or end number"
+  x =: x && x:N
+  y =: y && y:N
+  when x && y && (x >= y):
+    die "$x is not less than $y"
+  defn fun(f):
+    fn(n):
+      when-not n:int?:
+        die: "$n is not an integer"
+      when-not f(n):
+        die: "$n is not in range $rng"
+  cond:
+    not(x): fun(\(_ <= y))
+    not(y): fun(\(_ >= x))
+    else:   fun(\(x <= _ <= y))
+
+defn get-flt-rng(rng):
+  m =: rng =~ re-flt-rng
+  m x y =: m
+  when-not x || y:
+    die: "Range must have start or end number"
+  x =: x && x:N
+  y =: y && y:N
+  when x && y && (x >= y):
+    die "$x is not less than $y"
+  fun =:
+    fn(f):
+      fn(n):
+        when-not f(n):
+          die: "$n is not in range $rng"
+  cond:
+    not(x): fun(\(_ <= y))
+    not(y): fun(\(_ >= x))
+    else:   fun(\(x <= _ <= y))
+
+defn get-type-ref(ref):
+  fn(x):
+    name =: ref.subs(1)
+    call(name x) ||:
+      die: |
+        Failed to validate type '$name' for:
+        $x
+
+defn get-str-rgx(rgx):
+  m =: rgx =~ re-regex
+  m r =: m
+  rs =: "^$r$"
+  r =: qr(rs)
+  fn(s):
+    string?(s) ||:
+      die: |
+        Not a string:
+        $s
+    s =~ r ||:
+      die: |
+        String: "$s"
+        Does not match: $rs
+
+defn get-dsl-type(s):
+  condp \(%2 =~ %1) s:
+    re-int-rng: get-int-rng(s)
+    re-flt-rng: get-flt-rng(s)
+    re-type-ref: get-type-ref(s)
+    re-regex: get-str-rgx(s)
+    die: "Bad schemays type spec:\ '$s'"
+
+defn map(spec):
+  fn(map):
+    when-not map?(map):
+      die: |
+        Failed type '$name' check - not a map:
+        $map
+    new =:
+      pairs =: spec:seq
+      loop [[key type] *pair] pairs, new map:
+        new =:
+          key opt =:
+            re-opt =: /\ +\?$/
+            if key =~ re-opt:
+              -[key.replace(re-opt) true]
+               [key false]
+          val =: new.$key
+          type =: type:string?.if(type:get-dsl-type type)
+          if val:nil?:
+            if-not opt:
+              die: |
+                Missing key '$key' in:
+                $map
+              else: new
+            else:
+              type: val
+              dissoc new: key
+        if pair.?:
+          recur: pair new
+          else: new
+    if new.?:
+      die: |
+        Mapping has unknown keys:
+        $(yaml/dump(new:keys):chomp)
+      else: map
+
+defn list(check):
+  check =: check.replace(/^\+/):value
+  fn(vals):
+    if vals:coll?:
+      each val vals:
+        call check: val
+      else:
+        die: "Failed $name. Not a list: $val"
+
+defn enum(spec):
+  fn(val):
+    val.in?(spec)
