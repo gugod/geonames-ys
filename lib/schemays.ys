@@ -75,7 +75,7 @@ defn get-dsl-type(s):
     re-flt-rng: get-flt-rng(s)
     re-type-ref: get-type-ref(s)
     re-regex: get-str-rgx(s)
-    die: "Bad schemays type spec:\ '$s'"
+  die: "Bad schemays type spec:\ '$s'"
 
 defn map(spec):
   fn(map):
