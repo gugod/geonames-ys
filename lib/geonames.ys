@@ -49,10 +49,33 @@ country-info-columns =: !
   - neighbours
   - EquivalentFipsCode
 
+# Utilties
+# --------
+
 defn lines(file):
   map _ std/lines(slurp(file)):
     # Lines end with "\r\n" and that makes last element always being an "\r"
     fn(line): line:chomp
+
+defn to-nil-if-empty(s):
+  if s:empty?:
+    then: nil
+    else: s
+
+defn to-nil-if-zero(s):
+  if s == "0":
+    then: nil
+    else: s
+
+defn csv-list(s):
+  if s:empty?:
+    then: (list)
+    else: s.split(",")
+
+defn csv-list-or-nil(s):
+  if s:empty?:
+    then: nil
+    else: s.split(",")
 
 # Types
 # -----
@@ -109,3 +132,9 @@ country-info =: !:T/map:
   "Languages"          : ! T/maybe(T/list(language-code))
   "neighbours"         : ! T/maybe(T/list(iso2))
   "EquivalentFipsCode" : ! T/maybe(fips-code)
+
+city =: !:T/map:
+  "geonameid"          : ! T/integer
+  "name" : ! T/string-length(1 200)
+  "asciiname" : ! T/string-length(1 200)
+  "alternatenames" : ! T/list(T/string-length(1 200))

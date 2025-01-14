@@ -21,40 +21,25 @@ defn load-country-info(file):
       make-country-info:
         interleave geonames/country-info-columns: row
 
-defn to-nil-if-empty(s):
-  if s:empty?:
-    then: nil
-    else: s
-
-defn to-nil-if-zero(s):
-  if s == "0":
-    then: nil
-    else: s
-
-defn csv-list-or-nil(s):
-  if s:empty?:
-    then: nil
-    else: s.split(",")
-
 defn make-country-info(x):
   m =: apply(omap x)
   =>: !:geonames/country-info:
     ISO                : ! m.ISO
     ISO3               : ! m.ISO3
-    ISO-Numeric        : ! m.get("ISO-Numeric"):to-nil-if-zero
-    fips               : ! m.get("fips"):to-nil-if-empty
+    ISO-Numeric        : ! m.get("ISO-Numeric"):geonames/to-nil-if-zero
+    fips               : ! m.get("fips"):geonames/to-nil-if-empty
     Country            : ! m.get("Country")
     Capital            : ! m.get("Capital")
     Area               : ! m.get("Area(in sq km)"):N
     Population         : ! m.get("Population"):N
     Continent          : ! m.get("Continent")
-    tld                : ! m.get("tld"):to-nil-if-empty
-    CurrencyCode       : ! m.get("CurrencyCode"):to-nil-if-empty
-    CurrencyName       : ! m.get("CurrencyName"):to-nil-if-empty
-    Phone              : ! m.get("Phone"):to-nil-if-empty
-    PostalCodeFormat   : ! m.get("Postal Code Format"):to-nil-if-empty
-    PostalCodeRegex    : ! m.get("Postal Code Regex"):to-nil-if-empty
-    Languages          : ! m.get("Languages"):csv-list-or-nil
+    tld                : ! m.get("tld"):geonames/to-nil-if-empty
+    CurrencyCode       : ! m.get("CurrencyCode"):geonames/to-nil-if-empty
+    CurrencyName       : ! m.get("CurrencyName"):geonames/to-nil-if-empty
+    Phone              : ! m.get("Phone"):geonames/to-nil-if-empty
+    PostalCodeFormat   : ! m.get("Postal Code Format"):geonames/to-nil-if-empty
+    PostalCodeRegex    : ! m.get("Postal Code Regex"):geonames/to-nil-if-empty
+    Languages          : ! m.get("Languages"):geonames/csv-list-or-nil
     geonameid          : ! m.geonameid:N
-    neighbours         : ! m.get("neighbours"):csv-list-or-nil
-    EquivalentFipsCode : ! m.get("EquivalentFipsCode"):to-nil-if-empty
+    neighbours         : ! m.get("neighbours"):geonames/csv-list-or-nil
+    EquivalentFipsCode : ! m.get("EquivalentFipsCode"):geonames/to-nil-if-empty
