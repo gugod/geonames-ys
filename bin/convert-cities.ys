@@ -14,5 +14,28 @@ defn load-cities(file):
 
   map _ rows:
     fn(row):
-      apply omap:
+      make-city:
         interleave geonames/columns: row
+
+defn make-city(x):
+  m =: apply(omap x)
+  =>: !:geonames/city:
+    geonameid : ! m.geonameid:N
+    name : ! m.name
+    asciiname : ! m.asciiname:geonames/to-nil-if-empty
+    alternatenames : ! m.alternatenames:geonames/csv-list-or-nil
+    longitude : ! m.longitude:N
+    latitude : ! m.latitude:N
+    featureClass: ! m.get("feature class")
+    featureCode: ! m.get("feature code"):geonames/to-nil-if-empty
+    countryCode: ! m.get("country code")
+    cc2: ! m.get("cc2"):geonames/csv-list-or-nil
+    admin1Code: ! m.get("admin1 code"):geonames/to-nil-if-empty
+    admin2Code: ! m.get("admin2 code"):geonames/to-nil-if-empty
+    admin3Code: ! m.get("admin3 code"):geonames/to-nil-if-empty
+    admin4Code: ! m.get("admin4 code"):geonames/to-nil-if-empty
+    population: ! m.population:N
+    elevation: ! m.elevation:N
+    dem: ! m.dem:I
+    timezone: ! m.timezone
+    modificationDate: ! m.get("modification date")

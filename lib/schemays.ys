@@ -134,6 +134,11 @@ defn integer(val):
     die: "Not an integer: $val"
   =>: val
 
+defn number(val):
+  when-not val:number?:
+    die: "Not an number: $val"
+  =>: val
+
 defn string(val):
   when-not val:string?:
     die: "Not a string: $val"

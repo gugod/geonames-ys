@@ -112,6 +112,45 @@ tld =:
 language-code =:
   T/string-length: 1 200
 
+city-name =:
+  T/string-length: 1 200
+
+longitude =:
+  fn(val):
+    val =: val:T/number
+    when-not (<= -180 val 180):
+      die: "Not a valid longitude: $val"
+    =>: val
+
+latitude =:
+  fn(val):
+    val =: val:T/number
+    when-not (<= -90 val 90):
+      die: "Not a valid latitude: $val"
+    =>: val
+
+feature-class =: T/string-length(1 1)
+
+feature-code =: T/string-length(1 10)
+
+country-code =:
+  T/get-str-rgx: "/[A-Z][A-Z]/"
+
+admin1-code =: T/string-length(1 20)
+
+admin2-code =: T/string-length(1 80)
+
+admin3-code =: T/string-length(1 20)
+
+admin4-code =: T/string-length(1 20)
+
+dem =: T/integer
+
+timezone =: T/string-length(1 40)
+
+yyyymmdd =:
+  T/get-str-rgx: "/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/"
+
 country-info =: !:T/map:
   "ISO"                : ! iso2
   "ISO3"               : ! iso3
@@ -135,6 +174,21 @@ country-info =: !:T/map:
 
 city =: !:T/map:
   "geonameid"          : ! T/integer
-  "name" : ! T/string-length(1 200)
-  "asciiname" : ! T/string-length(1 200)
-  "alternatenames" : ! T/list(T/string-length(1 200))
+  "name" : ! city-name
+  "asciiname" : ! T/maybe(city-name)
+  "alternatenames" : ! T/maybe(T/list(city-name))
+  "latitude": ! latitude
+  "longitude": ! longitude
+  "featureClass": ! feature-class
+  "featureCode": ! T/maybe(feature-code)
+  "countryCode": ! country-code
+  "cc2": ! T/maybe(T/list(country-code))
+  "admin1Code": ! T/maybe(admin1-code)
+  "admin2Code": ! T/maybe(admin2-code)
+  "admin3Code": ! T/maybe(admin3-code)
+  "admin4Code": ! T/maybe(admin4-code)
+  "population": ! T/positive-num-or-zero
+  "elevation": ! T/maybe(T/number)
+  "dem": ! dem
+  "timezone": ! timezone
+  "modificationDate": ! yyyymmdd
