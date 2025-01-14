@@ -173,22 +173,22 @@ country-info =: !:T/map:
   "EquivalentFipsCode" : ! T/maybe(fips-code)
 
 city =: !:T/map:
-  "geonameid"          : ! T/integer
-  "name" : ! city-name
-  "asciiname" : ! T/maybe(city-name)
-  "alternatenames" : ! T/maybe(T/list(city-name))
-  "latitude": ! latitude
-  "longitude": ! longitude
-  "featureClass": ! feature-class
-  "featureCode": ! T/maybe(feature-code)
-  "countryCode": ! country-code
-  "cc2": ! T/maybe(T/list(country-code))
-  "admin1Code": ! T/maybe(admin1-code)
-  "admin2Code": ! T/maybe(admin2-code)
-  "admin3Code": ! T/maybe(admin3-code)
-  "admin4Code": ! T/maybe(admin4-code)
-  "population": ! T/positive-num-or-zero
-  "elevation": ! T/maybe(T/number)
-  "dem": ! dem
-  "timezone": ! timezone
-  "modificationDate": ! yyyymmdd
+  "geonameid"        : ! T/integer
+  "name"             : ! city-name
+  "asciiname"        : ! T/maybe(city-name)
+  "alternatenames"   : ! T/maybe(T/list(city-name))
+  "latitude"         : ! latitude
+  "longitude"        : ! longitude
+  "featureClass"     : ! feature-class
+  "featureCode"      : ! T/maybe(feature-code)
+  "countryCode"      : ! country-code
+  "cc2"              : ! T/maybe(T/list(country-code))
+  "admin1Code"       : ! T/maybe(admin1-code)
+  "admin2Code"       : ! T/maybe(admin2-code)
+  "admin3Code"       : ! T/maybe(admin3-code)
+  "admin4Code"       : ! T/maybe(admin4-code)
+  "population"       : ! T/positive-num-or-zero
+  "elevation"        : ! T/maybe(T/number)
+  "dem"              : ! dem
+  "timezone"         : ! timezone
+  "modificationDate" : ! yyyymmdd
